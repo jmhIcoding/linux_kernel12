@@ -1,7 +1,7 @@
 CC	=gcc -mcpu=i386
-#CFLAGS	=-Wall -O -fstrength-reduce -fomit-frame-pointer \
+CFLAGS	=-Wall -O -fstrength-reduce -fomit-frame-pointer \
 	-finline-functions -nostdinc -I../include
-CFLAGS	=-Wall -O -fstrength-reduce -fomit-frame-pointer -nostdinc -I../include
+#CFLAGS	=-Wall -O -fstrength-reduce -fomit-frame-pointer -nostdinc -I../include
 AS	=as
 AR	=ar
 LD	=ld

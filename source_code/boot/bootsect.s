@@ -31,7 +31,7 @@ begdata:
 begbss:
 .text
 
-SETUPLEN = 4					! nr of setup-sectors
+SETUPLEN = 4				! nr of setup-sectors
 BOOTSEG  = 0x07c0			! original address of boot-sector
 INITSEG  = 0x9000			! we move boot here - out of the way
 SETUPSEG = 0x9020			! setup starts here
@@ -42,8 +42,8 @@ ENDSEG   = SYSSEG + SYSSIZE		! where to stop loading
 !		0x301 - first partition on first drive etc
 ROOT_DEV = 0x306
 
-entry start
-start:
+entry _start
+_start:
 	mov	ax,#BOOTSEG
 	mov	ds,ax
 	mov	ax,#INITSEG
@@ -225,11 +225,11 @@ bad_rt:	mov ax,#0
 	pop ax
 	jmp read_track
 
-/*
- * This procedure turns off the floppy drive motor, so
- * that we enter the kernel in a known state, and
- * don't have to worry about it later.
- */
+!/*
+! * This procedure turns off the floppy drive motor, so
+! * that we enter the kernel in a known state, and
+! * don't have to worry about it later.
+! */
 kill_motor:
 	push dx
 	mov dx,#0x3f2

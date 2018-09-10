@@ -10,5 +10,6 @@
 
 #define extern
 #define inline
+#define static
 #define __LIBRARY__
 #include <string.h>
