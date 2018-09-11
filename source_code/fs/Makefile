@@ -1,10 +1,10 @@
 AR	=ar
 AS	=as
-CC	=gcc -mcpu=i386
-LD	=ld
-CFLAGS	=-Wall -fstrength-reduce -fomit-frame-pointer \
+CC	=gcc -m32 -w -mtune=i386 
+LD	=ld -m elf_i386
+CFLAGS	=-fstrength-reduce -fomit-frame-pointer -fno-stack-protector\
 	 -nostdinc -I../include
-CPP	=gcc -E -nostdinc -I../include
+CPP	=gcc  -mtune=i386  -m32 -w -E -nostdinc -I../include
 
 .c.s:
 	$(CC) $(CFLAGS) \

@@ -10,10 +10,10 @@ AR	=ar
 AS	=as
 LD	=ld
 LDFLAGS	=-s -x
-CC	=gcc -mcpu=i386
-CFLAGS	=-Wall -O -fstrength-reduce -fomit-frame-pointer  \
+CC	=gcc -mtune=i386 -m32
+CFLAGS	=-w -O -fstrength-reduce -fomit-frame-pointer  -fno-stack-protector\
 	-finline-functions -nostdinc -I../../include
-CPP	=gcc -E -nostdinc -I../../include
+CPP	=gcc -mtune=i386 -m32 -E -nostdinc -I../../include
 
 .c.s:
 	$(CC) $(CFLAGS) \

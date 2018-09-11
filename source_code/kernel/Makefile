@@ -7,13 +7,13 @@
 #
 
 AR	=ar
-AS	=as
+AS	=as --32
 LD	=ld
-LDFLAGS	=-s -x
-CC	=gcc -mcpu=i386
-CFLAGS	=-Wall -O -fstrength-reduce -fomit-frame-pointer \
+LDFLAGS	=-s -x -m elf_i386
+CC	=gcc -m32 -mtune=i386
+CFLAGS	=-m32 -O -fstrength-reduce -fomit-frame-pointer -fno-stack-protector \
 	-finline-functions -nostdinc -I../include
-CPP	=gcc -E -nostdinc -I../include
+CPP	=gcc -mtune=i386 -E -nostdinc -I../include
 
 .c.s:
 	$(CC) $(CFLAGS) \
@@ -29,7 +29,7 @@ OBJS  = sched.o system_call.o traps.o asm.o fork.o \
 	signal.o mktime.o
 
 kernel.o: $(OBJS)
-	$(LD) -r -o kernel.o $(OBJS)
+	$(LD) $(LDFLAGS) -r -o kernel.o $(OBJS)
 	sync
 
 clean:

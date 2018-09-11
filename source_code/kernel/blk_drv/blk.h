@@ -84,7 +84,7 @@ extern struct task_struct * wait_for_request;
 #define DEVICE_ON(device)
 #define DEVICE_OFF(device)
 
-#elif
+#else
 /* unknown blk device */
 #error "unknown blk device"
 
