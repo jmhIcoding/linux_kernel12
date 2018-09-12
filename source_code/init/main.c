@@ -135,9 +135,11 @@ void main(void)		/* This really IS void, no error here. */
 	floppy_init();
 	sti();
 	move_to_user_mode();
+	//vprintf("Hello world!");
 	if (!fork()) {		/* we count on this going ok */
 		init();
 	}
+	//vprintf("Hello world End!");
 /*
  *   NOTE!!   For any other task 'pause()' would mean we have to get a
  * signal to awaken, but task0 is the sole exception (see 'schedule()')
