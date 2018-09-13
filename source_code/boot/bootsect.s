@@ -45,15 +45,14 @@ ROOT_DEV = 0x306
 entry _start
 _start:
 	mov	ax,#BOOTSEG
-	mov	ds,ax
+	mov	ds,ax	!设置复制 源段起点
 	mov	ax,#INITSEG
-	mov	es,ax
-	mov	cx,#256
-	sub	si,si
-	sub	di,di
-	rep
-	movw
-	jmpi	go,INITSEG
+	mov	es,ax   !设置复制 目的段起点
+	mov	cx,#256 !设置循环次数
+	sub	si,si	!偏移为0
+	sub	di,di	!偏移为0
+	rep	movw	!重复执行movw,直到cx为0。而movw的定义为：将DS:SI一个word的内容复制到ES:DI
+	jmpi	go,INITSEG !设置cs为INITSEG,而IP为go标识所在的偏移量
 go:	mov	ax,cs
 	mov	ds,ax
 	mov	es,ax
