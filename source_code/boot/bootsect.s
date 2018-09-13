@@ -52,24 +52,24 @@ _start:
 	sub	si,si	!偏移为0
 	sub	di,di	!偏移为0
 	rep	movw	!重复执行movw,直到cx为0。而movw的定义为：将DS:SI一个word的内容复制到ES:DI
-	jmpi	go,INITSEG !设置cs为INITSEG,而IP为go标识所在的偏移量
-go:	mov	ax,cs
+	jmpi	go,INITSEG !设置cs为INITSEG,而IP为go标识所在的偏移量===>此时,cpu关注于INITSEG里面的bootsec代码
+go:	mov	ax,cs !cs此时的值为INITSEG，也就是0x9000
 	mov	ds,ax
-	mov	es,ax
+	mov	es,ax !段对齐
 ! put stack at 0x9ff00.
-	mov	ss,ax
-	mov	sp,#0xFF00		! arbitrary value >>512
+	mov	ss,ax !栈 segment对齐
+	mov	sp,#0xFF00		! arbitrary value >>512,因为此时,[ss,ss+512]是bootsect的内存
 
 ! load the setup-sectors directly after the bootblock.
 ! Note that 'es' is already set up.
 
 load_setup:
-	mov	dx,#0x0000		! drive 0, head 0
-	mov	cx,#0x0002		! sector 2, track 0
-	mov	bx,#0x0200		! address = 512, in INITSEG
-	mov	ax,#0x0200+SETUPLEN	! service 2, nr of sectors
-	int	0x13			! read it
-	jnc	ok_load_setup		! ok - continue
+	mov	dx,#0x0000		! drive 0, head 0 指定驱动器信息
+	mov	cx,#0x0002		! sector 2, track 0	;CL低五位 所读起始扇区
+	mov	bx,#0x0200		! address = 512, in INITSEG;es:bx就是目的地址,用于结束内容
+	mov	ax,#0x0200+SETUPLEN	! service 2, nr of sectors;AH-->0x02指明读取扇区;AL-->0x0004,读取扇区的数目
+	int	0x13			! read it 将指定扇区的代码加载到内存的指定位置
+	jnc	ok_load_setup		! ok - continue --->若出错cf置位,则不跳转
 	mov	dx,#0x0000
 	mov	ax,#0x0000		! reset the diskette
 	int	0x13
