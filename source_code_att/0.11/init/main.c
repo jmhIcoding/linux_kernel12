@@ -103,6 +103,7 @@ static long main_memory_start = 0;
 
 struct drive_info { char dummy[32]; } drive_info;
 
+static int printf(const char *fmt, ...);
 void main(void)		/* This really IS void, no error here. */
 {			/* The startup routine assumes (well, ...) this */
 /*
@@ -138,6 +139,7 @@ void main(void)		/* This really IS void, no error here. */
 	floppy_init();
 	sti();
 	move_to_user_mode();
+	printf("Hello world!!!!\n");
 	if (!fork()) {		/* we count on this going ok */
 		init();
 	}
