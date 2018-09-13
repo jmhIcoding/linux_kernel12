@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0BF8E13A-B198-4935-ADA1-3000EAB436C9}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="fs\bitmap.c" />
+    <ClCompile Include="fs\block_dev.c" />
+    <ClCompile Include="fs\buffer.c" />
+    <ClCompile Include="fs\char_dev.c" />
+    <ClCompile Include="fs\exec.c" />
+    <ClCompile Include="fs\fcntl.c" />
+    <ClCompile Include="fs\file_dev.c" />
+    <ClCompile Include="fs\file_table.c" />
+    <ClCompile Include="fs\inode.c" />
+    <ClCompile Include="fs\ioctl.c" />
+    <ClCompile Include="fs\namei.c" />
+    <ClCompile Include="fs\open.c" />
+    <ClCompile Include="fs\pipe.c" />
+    <ClCompile Include="fs\read_write.c" />
+    <ClCompile Include="fs\stat.c" />
+    <ClCompile Include="fs\super.c" />
+    <ClCompile Include="fs\truncate.c" />
+    <ClCompile Include="init\main.c" />
+    <ClCompile Include="kernel\blk_drv\floppy.c" />
+    <ClCompile Include="kernel\blk_drv\hd.c" />
+    <ClCompile Include="kernel\blk_drv\ll_rw_blk.c" />
+    <ClCompile Include="kernel\blk_drv\ramdisk.c" />
+    <ClCompile Include="kernel\chr_drv\console.c" />
+    <ClCompile Include="kernel\chr_drv\serial.c" />
+    <ClCompile Include="kernel\chr_drv\tty_io.c" />
+    <ClCompile Include="kernel\chr_drv\tty_ioctl.c" />
+    <ClCompile Include="kernel\exit.c" />
+    <ClCompile Include="kernel\fork.c" />
+    <ClCompile Include="kernel\math\math_emulate.c" />
+    <ClCompile Include="kernel\mktime.c" />
+    <ClCompile Include="kernel\panic.c" />
+    <ClCompile Include="kernel\printk.c" />
+    <ClCompile Include="kernel\sched.c" />
+    <ClCompile Include="kernel\signal.c" />
+    <ClCompile Include="kernel\sys.c" />
+    <ClCompile Include="kernel\traps.c" />
+    <ClCompile Include="kernel\vsprintf.c" />
+    <ClCompile Include="lib\close.c" />
+    <ClCompile Include="lib\ctype.c" />
+    <ClCompile Include="lib\dup.c" />
+    <ClCompile Include="lib\errno.c" />
+    <ClCompile Include="lib\execve.c" />
+    <ClCompile Include="lib\malloc.c" />
+    <ClCompile Include="lib\open.c" />
+    <ClCompile Include="lib\setsid.c" />
+    <ClCompile Include="lib\string.c" />
+    <ClCompile Include="lib\wait.c" />
+    <ClCompile Include="lib\write.c" />
+    <ClCompile Include="lib\_exit.c" />
+    <ClCompile Include="mm\memory.c" />
+    <ClCompile Include="tools\build.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\a.out.h" />
+    <ClInclude Include="include\asm\io.h" />
+    <ClInclude Include="include\asm\memory.h" />
+    <ClInclude Include="include\asm\segment.h" />
+    <ClInclude Include="include\asm\system.h" />
+    <ClInclude Include="include\const.h" />
+    <ClInclude Include="include\ctype.h" />
+    <ClInclude Include="include\errno.h" />
+    <ClInclude Include="include\fcntl.h" />
+    <ClInclude Include="include\linux\config.h" />
+    <ClInclude Include="include\linux\fdreg.h" />
+    <ClInclude Include="include\linux\fs.h" />
+    <ClInclude Include="include\linux\hdreg.h" />
+    <ClInclude Include="include\linux\head.h" />
+    <ClInclude Include="include\linux\kernel.h" />
+    <ClInclude Include="include\linux\mm.h" />
+    <ClInclude Include="include\linux\sched.h" />
+    <ClInclude Include="include\linux\sys.h" />
+    <ClInclude Include="include\linux\tty.h" />
+    <ClInclude Include="include\signal.h" />
+    <ClInclude Include="include\stdarg.h" />
+    <ClInclude Include="include\stddef.h" />
+    <ClInclude Include="include\string.h" />
+    <ClInclude Include="include\sys\stat.h" />
+    <ClInclude Include="include\sys\times.h" />
+    <ClInclude Include="include\sys\types.h" />
+    <ClInclude Include="include\sys\utsname.h" />
+    <ClInclude Include="include\sys\wait.h" />
+    <ClInclude Include="include\termios.h" />
+    <ClInclude Include="include\time.h" />
+    <ClInclude Include="include\unistd.h" />
+    <ClInclude Include="include\utime.h" />
+    <ClInclude Include="kernel\blk_drv\blk.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="boot\bootsect.s" />
+    <None Include="boot\head.s" />
+    <None Include="boot\setup.s" />
+    <None Include="fs\Makefile" />
+    <None Include="kernel\asm.s" />
+    <None Include="kernel\blk_drv\Makefile" />
+    <None Include="kernel\chr_drv\keyboard.s" />
+    <None Include="kernel\chr_drv\Makefile" />
+    <None Include="kernel\chr_drv\rs_io.s" />
+    <None Include="kernel\Makefile" />
+    <None Include="kernel\math\Makefile" />
+    <None Include="kernel\system_call.s" />
+    <None Include="lib\Makefile" />
+    <None Include="Makefile" />
+    <None Include="mm\Makefile" />
+    <None Include="mm\page.s" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
