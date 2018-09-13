@@ -133,6 +133,8 @@ else
   VM_CMD_HDA = $(QEMU_CMD_HDA)
   _VM_CMD_HDA = $(_QEMU_CMD_HDA)
   VM_DBG = $(QEMU_DBG)
+  VM_DE=$(QEMU_CMD)
+  VM_DE+= -s -S 
 endif
 
 # Allow to use curses based console via ssh
@@ -165,7 +167,9 @@ boot-hd: start-hd
 boot-fd: start-fd
 boot: start
 _boot: _start
-
+md: ramdisk-boot Image
+	$(SETROOTDEV_CMD_RAM)
+	$(VM_DE)$(VM_DISPLAY)
 start: ramdisk-boot Image
 	$(SETROOTDEV_CMD_RAM)
 	$(VM_CMD)$(VM_DISPLAY)
