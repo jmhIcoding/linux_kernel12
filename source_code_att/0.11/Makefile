@@ -1,7 +1,7 @@
 # This is a basic Makefile for setting the general configuration
 include Makefile.head
 
-LDFLAGS	+= -Ttext 0 -e startup_32
+LDFLAGS	+= -Ttext 0 -e startup_32 
 CFLAGS	+= -Iinclude
 CPP	+= -Iinclude
 
