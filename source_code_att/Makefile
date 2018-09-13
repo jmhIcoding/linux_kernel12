@@ -14,7 +14,6 @@ clean: $(LINUX_SRC)
 	$(Q)(cd $(CALLGRAPH_DIR); make $@)
 	$(Q)(cd $(LINUX_SRC); make $@)
 	$(Q)rm -rf bochsout.txt
-
 distclean: clean
 	$(Q)(cd $(LINUX_SRC); make $@)
 
