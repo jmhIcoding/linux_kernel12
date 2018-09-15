@@ -33,8 +33,8 @@ startup_32:
 	xorl %eax,%eax
 1:	incl %eax		# check that A20 really IS enabled
 	movl %eax,0x000000	# loop forever if it isn't
-	cmpl %eax,0x100000
-	je 1b
+	cmpl %eax,0x100000 #如果没有打开A20总线；那么0x100000会溢出到0x000009,于是%eax会与[0x100000]相等
+	je 1b #如何相等就一直训练,哈哈哈
 
 /*
  * NOTE! 486 should set bit 16, to check for write-protect in supervisor
@@ -201,7 +201,7 @@ setup_paging:
 	movl $1024*5,%ecx		/* 5 pages - pg_dir+4 page tables */
 	xorl %eax,%eax
 	xorl %edi,%edi			/* pg_dir is at 0x000 */
-	cld;rep;stosl
+	cld;rep;stosl			#清空5*1024个字节区域
 	movl $pg0+7,pg_dir		/* set present bit/user r/w */
 	movl $pg1+7,pg_dir+4		/*  --------- " " --------- */
 	movl $pg2+7,pg_dir+8		/*  --------- " " --------- */
