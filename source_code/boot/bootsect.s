@@ -53,7 +53,7 @@ _start:
 	sub	di,di	!偏移为0
 	rep	movw	!重复执行movw,直到cx为0。而movw的定义为：将DS:SI一个word的内容复制到ES:DI
 	jmpi	go,INITSEG !设置cs为INITSEG,而IP为go标识所在的偏移量===>此时,cpu关注于INITSEG里面的bootsec代码
-go:	mov	ax,cs !cs此时的值为INITSEG，也就是0x9000
+go:	mov	ax,cs !cs此时的值为INITSEG，也就是0x9000，跳转到对应的入口点
 	mov	ds,ax
 	mov	es,ax !段对齐
 ! put stack at 0x9ff00.
@@ -101,11 +101,11 @@ ok_load_setup:
 	int	0x10
 
 ! ok, we've written the message, now
-! we want to load the system (at 0x10000)
+! we want to load the system (at 0x10000)！！！！至此，以及做好拷贝SYSIMAGE的准备了
 
 	mov	ax,#SYSSEG
-	mov	es,ax		! segment of 0x010000
-	call	read_it
+	mov	es,ax		! segment of 0x010000 将es设置为0x1000
+	call	read_it  !将sysimage读到SYSSEG处
 	call	kill_motor
 
 ! After that we check which root-device to use. If the device is
@@ -135,7 +135,7 @@ root_defined:
 ! the setup-routine loaded directly after
 ! the bootblock:
 
-	jmpi	0,SETUPSEG
+	jmpi	0,SETUPSEG  !===>已经复制好了，将cs设置为SETUPSEG也就是0x9020，ip设置为0，正式进入SETUP的代码部分
 
 ! This routine loads the system at address 0x10000, making sure
 ! no 64kB boundaries are crossed. We try to load it as fast as

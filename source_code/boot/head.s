@@ -21,7 +21,7 @@ startup_32:
 	mov %ax,%es
 	mov %ax,%fs
 	mov %ax,%gs
-	lss stack_start,%esp
+	lss stack_start,%esp   !=struct {long * a;short b;} stack_start = { & user_stack [PAGE_SIZE>>2] , 0x10 };esp设置为&user_stack[PAGE_SIZE>>2]就是这个数组的末尾后一个字节的位置。
 	call setup_idt
 	call setup_gdt
 	movl $0x10,%eax		# reload all the segment registers

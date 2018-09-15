@@ -38,7 +38,7 @@ start:
 	mov	ah,#0x03	! read cursor pos
 	xor	bh,bh
 	int	0x10		! save it in known place, con_init fetches
-	mov	[0],dx		! it from 0x90000.
+	mov	[0],dx		! it from 0x90000. 将光标的位置保存在[0]
 ! Get memory size (extended mem, kB)
 
 	mov	ah,#0x88
@@ -102,10 +102,11 @@ no_disk1:
 	rep
 	stosb
 is_disk1:
-
+!
+!此前，所有的中断服务程序都是Bios建立的！中断向量表在0~0x3FF,共0x400 1kB字节，每个中断向量表4字节（cs:ip)，256个向量
 ! now we want to move to protected mode ...
 
-	cli			! no interrupts allowed !
+	cli			! no interrupts allowed !			关中断
 
 ! first we move the system to it's rightful place
 
@@ -115,21 +116,21 @@ do_move:
 	mov	es,ax		! destination segment
 	add	ax,#0x1000
 	cmp	ax,#0x9000
-	jz	end_move
-	mov	ds,ax		! source segment
-	sub	di,di
-	sub	si,si
-	mov 	cx,#0x8000
+	jz	end_move    !如果,目的地址为0x9000，则不移动
+	mov	ds,ax		! source segment，此时ds为0x1000,
+	sub	di,di	!0
+	sub	si,si	!0
+	mov 	cx,#0x8000 !启动的长度,也就是将0x1000后面的0x8000个字，共0x10000个字节往前复制
 	rep
 	movsw
-	jmp	do_move
+	jmp	do_move  !这是一个循环,会一直把0x10000-0x90000的内容往前移动，而且linux 0.12的大小为48000 B
 
 ! then we load the segment descriptors
 
 end_move:
 	mov	ax,#SETUPSEG	! right, forgot this at first. didn't work :-)
 	mov	ds,ax
-	lidt	idt_48		! load idt with 0,0
+	lidt	idt_48		! load idt with 0,0,将idt_48加载到IDTR寄存器
 	lgdt	gdt_48		! load gdt with whatever appropriate
 
 ! that was painless, now we enable A20
@@ -148,7 +149,7 @@ end_move:
 ! messed this up with the original PC, and they haven't been able to
 ! rectify it afterwards. Thus the bios puts interrupts at 0x08-0x0f,
 ! which is used for the internal hardware interrupts as well. We just
-! have to reprogram the 8259's, and it isn't fun.
+! have to reprogram the 8259's, and it isn't fun.				=====？？？？重新映射？是什么意思
 
 	mov	al,#0x11		! initialization sequence
 	out	#0x20,al		! send it to 8259A-1
@@ -186,9 +187,10 @@ end_move:
 ! things as simple as possible, we do no register set-up or anything,
 ! we let the gnu-compiled 32-bit programs do that. We just jump to
 ! absolute address 0x00000, in 32-bit protected mode.
-	mov	ax,#0x0001	! protected mode (PE) bit
+	mov	ax,#0x0001	! protected mode (PE) bit   
 	lmsw	ax		! This is it!
-	jmpi	0,8		! jmp offset 0 of segment 8 (cs)
+	jmpi	0,8		! jmp offset 0 of segment 8 (cs) ===============================>开始了保护模式,都是基于gdt,idt来段寻址了的。
+	!===============> 8=1000b,特权级为00,是gdt,gdt表的1项(注意从0开始，也就是第二项),令cs为gdt表第一项里面的段基地址。查表可得1项的段基址为0x0000,偏移为0；也就是cs=0x00000,偏移0
 
 ! This routine checks that the keyboard command queue is empty
 ! No timeout is used - if this hangs there is something wrong with
@@ -219,7 +221,7 @@ idt_48:
 
 gdt_48:
 	.word	0x800		! gdt limit=2048, 256 GDT entries
-	.word	512+gdt,0x9	! gdt base = 0X9xxxx
+	.word	512+gdt,0x9	! gdt base = 0X9xxxx				512是bootsec的大小,其实等效于:.word 0x200+gdt,0x9。
 	
 .text
 endtext:
