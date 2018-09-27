@@ -35,10 +35,10 @@ __asm__ ("movw %%dx,%%ax\n\t" \
 
 #define set_trap_gate(n,addr) \
 	_set_gate(&idt[n],15,0,addr)
-
+//参数,中断号, 服务程序地址
 #define set_system_gate(n,addr) \
 	_set_gate(&idt[n],15,3,addr)
-
+// 3是用户特权级,最低特权级
 #define _set_seg_desc(gate_addr,type,dpl,base,limit) {\
 	*(gate_addr) = ((base) & 0xff000000) | \
 		(((base) & 0x00ff0000)>>16) | \
