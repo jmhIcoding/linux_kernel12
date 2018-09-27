@@ -155,6 +155,9 @@ void ll_rw_block(int rw, struct buffer_head * bh)
 }
 
 void blk_dev_init(void)
+//磁盘,软盘 ---->《6顶思考帽》
+//读取的时候 一块块的读取
+//指外设
 {
 	int i;
 
