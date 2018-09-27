@@ -42,7 +42,7 @@ __asm__("movl %%eax,%%cr3"::"a" (0))
 /* these are not to be changed without changing head.s etc */
 #define LOW_MEM 0x100000
 #define PAGING_MEMORY (15*1024*1024)
-#define PAGING_PAGES (PAGING_MEMORY>>12)
+#define PAGING_PAGES (PAGING_MEMORY>>12)   
 #define MAP_NR(addr) (((addr)-LOW_MEM)>>12)
 #define USED 100
 
@@ -54,7 +54,7 @@ static long HIGH_MEMORY = 0;
 #define copy_page(from,to) \
 __asm__("cld ; rep ; movsl"::"S" (from),"D" (to),"c" (1024))
 
-static unsigned char mem_map [ PAGING_PAGES ] = {0,};
+static unsigned char mem_map [ PAGING_PAGES ] = {0,};//  15MB/4k ,内存使用情况记录
 
 /*
  * Get physical address of first (actually last :-) free page, and mark it
@@ -403,12 +403,12 @@ void mem_init(long start_mem, long end_mem)
 
 	HIGH_MEMORY = end_mem;
 	for (i=0 ; i<PAGING_PAGES ; i++)
-		mem_map[i] = USED;
+		mem_map[i] = USED;//使用次数,被关联的进程数,被占用;先全部设置为占用
 	i = MAP_NR(start_mem);
 	end_mem -= start_mem;
-	end_mem >>= 12;
+	end_mem >>= 12;//主内存使用到页数目
 	while (end_mem-->0)
-		mem_map[i++]=0;
+		mem_map[i++]=0; //再把主内存的项目设置为0,未被使用
 }
 
 void calc_mem(void)
