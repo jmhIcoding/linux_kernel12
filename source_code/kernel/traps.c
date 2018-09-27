@@ -182,7 +182,7 @@ void trap_init(void)
 {
 	int i;
 
-	set_trap_gate(0,&divide_error);
+	set_trap_gate(0,&divide_error);//1.提升 特权级; 2.指定落点   --->门(中断号到服务程序入口点的映射关系)
 	set_trap_gate(1,&debug);
 	set_trap_gate(2,&nmi);
 	set_system_gate(3,&int3);	/* int3-5 can be called from all */
