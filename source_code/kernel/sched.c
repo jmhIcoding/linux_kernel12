@@ -51,18 +51,18 @@ extern int timer_interrupt(void);
 extern int system_call(void);
 
 union task_union {
-	struct task_struct task;
-	char stack[PAGE_SIZE];
+	struct task_struct task;//小于4086
+	char stack[PAGE_SIZE];//4096B
 };
 
-static union task_union init_task = {INIT_TASK,};
+static union task_union init_task = {INIT_TASK,};//其实没有","也可以的
 
 long volatile jiffies=0;
 long startup_time=0;
 struct task_struct *current = &(init_task.task);
 struct task_struct *last_task_used_math = NULL;
 
-struct task_struct * task[NR_TASKS] = {&(init_task.task), };
+struct task_struct * task[NR_TASKS] = {&(init_task.task), };//
 
 long user_stack [ PAGE_SIZE>>2 ] ;!1024个Long===>共1024
 
@@ -389,9 +389,9 @@ void sched_init(void)
 
 	if (sizeof(struct sigaction) != 16)
 		panic("Struct sigaction MUST be 16 bytes");
-	set_tss_desc(gdt+FIRST_TSS_ENTRY,&(init_task.task.tss));
-	set_ldt_desc(gdt+FIRST_LDT_ENTRY,&(init_task.task.ldt));
-	p = gdt+2+FIRST_TSS_ENTRY;
+	set_tss_desc(gdt+FIRST_TSS_ENTRY,&(init_task.task.tss));//FIRST_TSS_ENTRY==4;这是因为gdt 0是NULL,1是内核代码段,2是内核数据段,3是NULL,见head.S里面的gdt_descript
+	set_ldt_desc(gdt+FIRST_LDT_ENTRY,&(init_task.task.ldt));//FIRST_LDT_ENTRY=FIRST_TSS_ENTRY+1  (==5)
+	p = gdt+2+FIRST_TSS_ENTRY;//已经在原来的基础上使用了两项了;gdt定义：extern desc_table gdt;而desc_table又是struct {long a,b};8个字节
 	for(i=1;i<NR_TASKS;i++) {
 		task[i] = NULL;
 		p->a=p->b=0;
@@ -400,7 +400,7 @@ void sched_init(void)
 		p++;
 	}
 /* Clear NT, so that we won't have troubles with that later on */
-	__asm__("pushfl ; andl $0xffffbfff,(%esp) ; popfl");
+	__asm__("pushfl ; andl $0xffffbfff,(%esp) ; popfl");//?andl?是什么作用
 	ltr(0);//进入进程0
 	lldt(0);//进入进程0
 	outb_p(0x36,0x43);		/* binary, mode 3, LSB/MSB, ch 0 */
