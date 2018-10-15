@@ -354,7 +354,7 @@ void buffer_init(long buffer_end)
 	void * b;
 	int i;
 
-	if (buffer_end == 1<<20)
+	if (buffer_end == 1<<20)//1MB
 		b = (void *) (640*1024);
 	else
 		b = (void *) buffer_end;

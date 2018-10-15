@@ -134,9 +134,9 @@
 type name(void) \
 { \
 long __res; \
-__asm__ volatile ("int $0x80" \
+__asm__ volatile ("int $0x80" \ //===>特权级又会变成0
 	: "=a" (__res) \
-	: "0" (__NR_##name)); \
+	: "0" (__NR_##name)); \  //===>替换
 if (__res >= 0) \
 	return (type) __res; \
 errno = -__res; \

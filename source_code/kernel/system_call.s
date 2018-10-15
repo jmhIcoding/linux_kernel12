@@ -64,7 +64,7 @@ nr_system_calls = 72
  * Ok, I get parallel printer interrupts while using the floppy for some
  * strange reason. Urgel. Now I just ignore them.
  */
-.globl system_call,sys_fork,timer_interrupt,sys_execve
+.globl system_call,sys_fork,timer_interrupt,sys_execve  //说明system_call,sys_fork可被其他c语言代码调用
 .globl hd_interrupt,floppy_interrupt,parallel_interrupt
 .globl device_not_available, coprocessor_error
 
@@ -86,12 +86,12 @@ system_call:
 	pushl %edx
 	pushl %ecx		# push %ebx,%ecx,%edx as parameters
 	pushl %ebx		# to the system call
-	movl $0x10,%edx		# set up ds,es to kernel space
+	movl $0x10,%edx		# set up ds,es to kernel space，内核数据段 0001 0000;0特权,gdt,gdt的第3项(从1开始的第三项)
 	mov %dx,%ds
 	mov %dx,%es
-	movl $0x17,%edx		# fs points to local data space
+	movl $0x17,%edx		# fs points to local data space 00010 1 11,进程0的数据段
 	mov %dx,%fs
-	call sys_call_table(,%eax,4)
+	call sys_call_table(,%eax,4) #这一个间接寻址eax*4+sys_call_table，有一次压栈 push返回地址
 	pushl %eax
 	movl current,%eax
 	cmpl $0,state(%eax)		# state
@@ -213,8 +213,8 @@ sys_fork:
 	pushl %esi
 	pushl %edi
 	pushl %ebp
-	pushl %eax
-	call copy_process
+	pushl %eax //find_empty_process的返回值
+	call copy_process //none 是
 	addl $20,%esp
 1:	ret
 

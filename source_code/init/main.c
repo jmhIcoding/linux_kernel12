@@ -20,7 +20,7 @@
  * won't be any messing with the stack from main(), but we define
  * some others too.
  */
-static inline _syscall0(int,fork)
+static inline _syscall0(int,fork)		//static 用法?不被其他的文件调用inline用法?
 static inline _syscall0(int,pause)
 static inline _syscall1(int,setup,void *,BIOS)
 static inline _syscall0(int,sync)

@@ -111,6 +111,10 @@ struct task_struct {
 /*
  *  INIT_TASK is used to set up the first task table, touch at
  * your own risk!. Base=0, limit=0x9ffff (=640kB)
+ gdt:	.quad 0x0000000000000000	
+.quad 0x00c09a0000000fff	
+.quad 0x00c0920000000fff	
+.quad 0x0000000000000000
  */
 #define INIT_TASK \
 /* state etc */	{ 0,15,15, \
