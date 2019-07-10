@@ -1,8 +1,8 @@
 本项目是国科大《操作系统高级教程》的学习项目
 
-#编译内核
+# 编译内核
 
-##获取内核代码
+## 获取内核代码
 
 ```
 git clone https://github.com/jmhIcoding/linux_kernel12.git
@@ -17,12 +17,12 @@ git checkout check
 |
 |----source_code_att 修改后的linux-0.11代码,里面的src中bootsec.s,setup.s,head.s使用AT&T格式编写,负责生成linux内核 image
 ```
-##安装必要软件包
+## 安装必要软件包
 
 ```
 apt-get install qemu-system-i386 make gdb 
 ```
-##编译内核
+## 编译内核
 
 ```
 cd source_code_attr
@@ -58,7 +58,7 @@ Free mem: 11533312 bytes
 === Ok.
 [/usr/root]# ll
 ```
-##内核调试方法
+## 内核调试方法
 
 ```
 cd source_code_att
